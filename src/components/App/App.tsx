@@ -27,6 +27,11 @@ const answersMap: Record<StageName, number[]> = {
   complete: [],
 };
 
+const hasZeroStartValue = (index: number, stage: StageName): boolean => {
+  const stageAnswers = answersMap[stage];
+  return index === stageAnswers.length - 1 && stageAnswers[index] === 0;
+};
+
 function App() {
   const [currentStage, setCurrentStage] = useState<StageName>('first');
   const [answersIndex, setAnswersIndex] = useState(0);
@@ -39,7 +44,7 @@ function App() {
 
   const incrementAnswer = () => {
     const nextIndex = answersIndex + 1;
-    if (nextIndex >= answersMap[currentStage].length) {
+    if (nextIndex >= answersMap[currentStage].length || hasZeroStartValue(nextIndex, currentStage)) {
       incrementStage();
       setAnswersIndex(0);
     } else {
@@ -125,8 +130,8 @@ function App() {
           <tr className={classes.carriedRow}>
             <td></td>
             <td></td>
-            <td>{getTensDigit(topRowAnswers[1])}</td>
-            <td>{getTensDigit(topRowAnswers[0])}</td>
+            <td>{!isFirstStage || answersIndex >= 2 && getTensDigit(topRowAnswers[1])}</td>
+            <td>{!isFirstStage || answersIndex >= 1 && getTensDigit(topRowAnswers[0])}</td>
             <td></td>
           </tr>
 
