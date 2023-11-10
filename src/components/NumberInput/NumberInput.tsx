@@ -1,10 +1,11 @@
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { getTensDigit, getSingleDigit } from '../../helpers/maths';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { getSingleDigit } from '../../helpers/maths';
+import classes from './NumberInput.module.css';
 
 type NumberInputProps = {
   correctAnswer: number;
   disabled: boolean;
-  onComplete: (carriedOver: number) => void;
+  onComplete: () => void;
 }
 
 // allows empty string and two digit integers
@@ -28,14 +29,14 @@ const NumberInput = ({ correctAnswer, onComplete, disabled }: NumberInputProps) 
     event.preventDefault();
     if (Number(value) === correctAnswer) {
       setIsComplete(true);
-      onComplete(getTensDigit(value));
+      onComplete();
     }
   };
 
   const inputForm = (
     <form action="submit" onSubmit={handleSubmit}>
       <input
-        className="numberInput"
+        className={classes.numberInput}
         type="text"
         maxLength={2}
         value={value}

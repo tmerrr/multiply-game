@@ -1,6 +1,6 @@
-import { useState } from 'react'
-
-import './App.css'
+import cn from 'classnames';
+import { useState } from 'react';
+import classes from './App.module.css';
 import NumberInput from '../NumberInput/NumberInput';
 
 import {
@@ -27,10 +27,6 @@ const answersMap: Record<StageName, number[]> = {
   complete: [],
 };
 
-const topNumberText = String(topNumber);
-const bottomNumberText = String(bottomNumber);
-
-
 function App() {
   const [currentStage, setCurrentStage] = useState<StageName>('first');
   const [answersIndex, setAnswersIndex] = useState(0);
@@ -51,8 +47,7 @@ function App() {
     }
   };
 
-  const handleCorrectAnswer = (carriedOver: number) => {
-    console.log('<<<<<===== TO CARRY =====>>>>>', carriedOver);
+  const handleCorrectAnswer = () => {
     incrementAnswer();
   };
 
@@ -63,12 +58,12 @@ function App() {
   const isAnswerIndex = (i: number) => answersIndex === i;
 
   return (
-    <div className="container">
-      <table className="mainTable">
+    <div className={classes.container}>
+      <table className={classes.mainTable}>
 
-        <thead className="tableHead">
+        <thead className={classes.tableHead}>
 
-          <tr className='row'>
+          <tr className={classes.row}>
             <th></th>
             <th>1,000's</th>
             <th>100's</th>
@@ -78,47 +73,47 @@ function App() {
 
         </thead>
 
-        <tbody className="tableBody">
+        <tbody className={classes.tableBody}>
 
-          <tr className='row'>
+          <tr className={classes.row}>
             <td></td>
             <td></td>
             <td></td>
-            <td className={(isFirstStage || isSecondStage) && isAnswerIndex(1) ? 'active' : ''}>{topNumberText[0]}</td>
-            <td className={(isFirstStage || isSecondStage) && isAnswerIndex(0) ? 'active' : ''}>{topNumberText[1]}</td>
+            <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerIndex(1)})}>{getTensDigit(topNumber)}</td>
+            <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerIndex(0)})}>{getSingleDigit(topNumber)}</td>
           </tr>
 
-          <tr className='row'>
-            <td className={(isFirstStage || isSecondStage) ? 'active' : ''}>&times;</td>
+          <tr className={classes.row}>
+            <td className={cn({ [classes.active]: isFirstStage || isSecondStage })}>&times;</td>
             <td></td>
             <td></td>
-            <td className={isSecondStage && answersIndex < 2 ? 'active' : ''}>{bottomNumberText[0]}</td>
-            <td className={isFirstStage && answersIndex < 2 ? 'active' : ''}>{bottomNumberText[1]}</td>
+            <td className={cn({ [classes.active]: isSecondStage && answersIndex < 2 })}>{getTensDigit(bottomNumber)}</td>
+            <td className={cn({ [classes.active]: isFirstStage && answersIndex < 2 })}>{getSingleDigit(bottomNumber)}</td>
           </tr>
 
           <tr>
-            <td className="divider" colSpan={5}></td>
+            <td className={classes.divider} colSpan={5}></td>
           </tr>
 
           {/* TOP ROW */}
-          <tr className='row'>
+          <tr className={classes.row}>
             <td></td>
             <td></td>
-            <td className={isFinalStage && isAnswerIndex(2) ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(2) })}>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerIndex(2))}
                 correctAnswer={topRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isFinalStage && isAnswerIndex(1) ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(1) })}>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerIndex(1))}
                 correctAnswer={topRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isFinalStage && isAnswerIndex(0) ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(0) })}>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerIndex(0))}
                 correctAnswer={topRowAnswers[0]}
@@ -127,33 +122,32 @@ function App() {
             </td>
           </tr>
 
-          <tr className='carriedRow'>
+          <tr className={classes.carriedRow}>
             <td></td>
             <td></td>
             <td>{getTensDigit(topRowAnswers[1])}</td>
             <td>{getTensDigit(topRowAnswers[0])}</td>
-            {/* <td className='used'>1</td> */}
             <td></td>
           </tr>
 
           {/* SECOND ROW */}
-          <tr className='row'>
-            <td className={isFinalStage ? 'active' : ''}>+</td>
-            <td className={isFinalStage && isAnswerIndex(3) ? 'active' : ''}>
+          <tr className={classes.row}>
+            <td className={cn({ [classes.active]: isFinalStage })}>+</td>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(3)})}>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerIndex(2))}
                 correctAnswer={bottomRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isFinalStage && isAnswerIndex(2) ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(2)})}>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerIndex(1))}
                 correctAnswer={bottomRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isFinalStage && isAnswerIndex(1) ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isFinalStage && isAnswerIndex(1)})}>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerIndex(0))}
                 correctAnswer={bottomRowAnswers[0]}
@@ -163,7 +157,7 @@ function App() {
             <td></td> {/* SINGLE DIGITS COLUMN NOT USED ON SECOND ROW */}
           </tr>
 
-          <tr className='carriedRow'>
+          <tr className={classes.carriedRow}>
             <td></td>
             <td>{getTensDigit(bottomRowAnswers[1])}</td>
             <td>{getTensDigit(bottomRowAnswers[0])}</td>
@@ -172,34 +166,34 @@ function App() {
           </tr>
 
           <tr>
-            <td className="divider" colSpan={5}></td>
+            <td className={classes.divider} colSpan={5}></td>
           </tr>
 
           {/* FINAL ROW / TOTAL */}
-          <tr className='row'>
-            <td className={isComplete ? 'active' : ''}>=</td>
-            <td className={isComplete ? 'active' : ''}>
+          <tr className={classes.row}>
+            <td className={cn({ [classes.active]: isComplete })}>=</td>
+            <td className={cn({ [classes.active]: isComplete })}>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerIndex(3))}
                 correctAnswer={finalAnswers[3]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isComplete ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isComplete })}>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerIndex(2))}
                 correctAnswer={finalAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isComplete ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isComplete })}>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerIndex(1))}
                 correctAnswer={finalAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td className={isComplete ? 'active' : ''}>
+            <td className={cn({ [classes.active]: isComplete })}>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerIndex(0))}
                 correctAnswer={finalAnswers[0]}
@@ -208,7 +202,7 @@ function App() {
             </td>
           </tr>
 
-          <tr className='carriedRow'>
+          <tr className={classes.carriedRow}>
             <td></td>
             <td>{getTensDigit(finalAnswers[2])}</td>
             <td>{getTensDigit(finalAnswers[1])}</td>
@@ -218,9 +212,9 @@ function App() {
 
         </tbody>
 
-        <tfoot className="tableHead">
+        <tfoot className={classes.tableHead}>
 
-          <tr className='row'>
+          <tr className={classes.row}>
             <th></th>
             <th>1,000's</th>
             <th>100's</th>
