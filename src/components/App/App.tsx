@@ -1,11 +1,12 @@
-import { FormEventHandler } from 'react'
+// import { FormEventHandler } from 'react'
 
 import './App.css'
+import NumberInput from '../NumberInput/NumberInput';
 
 function App() {
 
-  const noSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
+  const handleTopSinglesAnswer = () => {
+    console.log('well done!');
   };
 
   return (
@@ -16,7 +17,7 @@ function App() {
 
           <tr className='row'>
             <th></th>
-            <th>1000's</th>
+            <th>1,000's</th>
             <th>100's</th>
             <th>10's</th>
             <th>1's</th>
@@ -52,11 +53,12 @@ function App() {
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
-            <td>
+            <td><NumberInput disabled={false} correctAnswer={15} onComplete={handleTopSinglesAnswer} /></td>
+            {/* <td>
               <form action="submit" onSubmit={noSubmit}>
                 <input className="numberInput" type="text" maxLength={2} />
               </form>
-            </td>
+            </td> */}
           </tr>
 
           <tr className='carriedRow'>
@@ -103,7 +105,7 @@ function App() {
 
           <tr className='row'>
             <th></th>
-            <th>1000's</th>
+            <th>1,000's</th>
             <th>100's</th>
             <th>10's</th>
             <th>1's</th>
