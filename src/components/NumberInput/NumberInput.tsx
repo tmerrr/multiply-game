@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { getSingleDigit } from '../../helpers/maths';
 import classes from './NumberInput.module.css';
@@ -6,13 +7,19 @@ type NumberInputProps = {
   correctAnswer: number;
   disabled: boolean;
   onComplete: () => void;
+  isHighlighted?: boolean;
 }
 
 // allows empty string and two digit integers
 const twoDigitIntegerRegex = /^$|^[0-9]{1,2}$/;
 const isValidInteger = (value: string) => twoDigitIntegerRegex.test(value);
 
-const NumberInput = ({ correctAnswer, onComplete, disabled }: NumberInputProps) => {
+const NumberInput = ({
+  correctAnswer,
+  onComplete,
+  disabled,
+  isHighlighted = false,
+}: NumberInputProps) => {
   const [value, setValue] = useState('');
   const [isComplete, setIsComplete] = useState(false);
 
@@ -46,7 +53,13 @@ const NumberInput = ({ correctAnswer, onComplete, disabled }: NumberInputProps) 
     </form>
   );
 
-  return isComplete ? getSingleDigit(value) : inputForm;
+  const renderedNumber = (
+    <div className={cn({ [classes.active]: isHighlighted })}>
+      {getSingleDigit(value)}
+    </div>
+  );
+
+  return isComplete ? renderedNumber : inputForm
 };
 
 export default NumberInput;

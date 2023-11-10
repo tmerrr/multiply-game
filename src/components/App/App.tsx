@@ -123,25 +123,28 @@ function App() {
           <tr className={classes.row}>
             <td></td>
             <td></td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(2) })}>
+            <td>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerAtIndex(2))}
                 correctAnswer={topRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(2)}
               />
             </td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(1) })}>
+            <td>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerAtIndex(1))}
                 correctAnswer={topRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(1)}
               />
             </td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(0) })}>
+            <td>
               <NumberInput
                 disabled={!(isFirstStage && isAnswerAtIndex(0))}
                 correctAnswer={topRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(0)}
               />
             </td>
           </tr>
@@ -167,25 +170,28 @@ function App() {
           {/* SECOND ROW */}
           <tr className={classes.row}>
             <td className={cn({ [classes.active]: isFinalStage })}>+</td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(3) })}>
+            <td>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerAtIndex(2))}
                 correctAnswer={bottomRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(3)}
               />
             </td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(2) })}>
+            <td>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerAtIndex(1))}
                 correctAnswer={bottomRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(2)}
               />
             </td>
-            <td className={cn({ [classes.active]: isFinalStage && isAnswerAtIndex(1) })}>
+            <td>
               <NumberInput
                 disabled={!(isSecondStage && isAnswerAtIndex(0))}
                 correctAnswer={bottomRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isFinalStage && isAnswerAtIndex(1)}
               />
             </td>
             <td></td> {/* SINGLE DIGITS COLUMN NOT USED ON SECOND ROW */}
@@ -205,8 +211,8 @@ function App() {
             })}>
               {(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(0))) && showIfGtZero(getTensDigit(bottomRowAnswers[0]))}
             </td>
-            <td></td>
-            <td></td>
+            <td></td> {/* never has a carried value */}
+            <td></td> {/* never has a carried value */}
           </tr>
 
           <tr>
@@ -216,32 +222,36 @@ function App() {
           {/* FINAL ROW / TOTAL */}
           <tr className={classes.row}>
             <td className={cn({ [classes.active]: isComplete })}>=</td>
-            <td className={cn({ [classes.active]: isComplete })}>
+            <td>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerAtIndex(3))}
                 correctAnswer={finalAnswers[3]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isComplete}
               />
             </td>
-            <td className={cn({ [classes.active]: isComplete })}>
+            <td>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerAtIndex(2))}
                 correctAnswer={finalAnswers[2]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isComplete}
               />
             </td>
-            <td className={cn({ [classes.active]: isComplete })}>
+            <td>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerAtIndex(1))}
                 correctAnswer={finalAnswers[1]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isComplete}
               />
             </td>
-            <td className={cn({ [classes.active]: isComplete })}>
+            <td>
               <NumberInput
                 disabled={!(isFinalStage && isAnswerAtIndex(0))}
                 correctAnswer={finalAnswers[0]}
                 onComplete={handleCorrectAnswer}
+                isHighlighted={isComplete}
               />
             </td>
           </tr>
@@ -252,7 +262,7 @@ function App() {
               [classes.active]: isFinalStage && isAnswerAtIndex(3),
               [classes.used]: isPassedStage('final'),
             })}>
-              {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(2)) && showIfGtZero(getTensDigit(finalAnswers[2]))}
+              <>{(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(2)) && showIfGtZero(getTensDigit(finalAnswers[2]))}</>
             </td>
             <td className={cn({
               [classes.active]: isFinalStage && isAnswerAtIndex(2),
@@ -260,12 +270,7 @@ function App() {
             })}>
               {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(1)) && showIfGtZero(getTensDigit(finalAnswers[1]))}
             </td>
-            <td className={cn({
-              [classes.active]: isFinalStage && isAnswerAtIndex(1),
-              [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(1))
-            })}>
-              {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(0)) && showIfGtZero(getTensDigit(finalAnswers[0]))}
-            </td>
+            <td></td>
             <td></td>
           </tr>
 
