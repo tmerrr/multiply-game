@@ -27,7 +27,7 @@
   height: 1.75em;
 }
 
-.carriedRow td {
+.carriedOverRow td {
   font-size: 0.5em;
   /* border: 0.5px solid black; */
   /* font-size: 15px; */
@@ -35,7 +35,7 @@
   /* height: 20px; */
 }
 
-.carriedRow td.used {
+.carriedOverRow td.used {
   text-decoration: line-through;
 }
 
