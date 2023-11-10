@@ -46,6 +46,7 @@ function App() {
             <td className="divider" colSpan={5}></td>
           </tr>
 
+          {/* TOP ROW */}
           <tr className='row'>
             <td></td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
@@ -66,8 +67,9 @@ function App() {
             <td></td>
           </tr>
 
+          {/* SECOND ROW */}
           <tr className='row'>
-            <td></td>
+            <td>+</td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
             <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
@@ -80,6 +82,19 @@ function App() {
             <td>1</td>
             <td></td>
             <td></td>
+          </tr>
+
+          <tr>
+            <td className="divider" colSpan={5}></td>
+          </tr>
+
+          {/* FINAL ROW / TOTAL */}
+          <tr className='row'>
+            <td>=</td>
+            <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
+            <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
+            <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
+            <td><input className="numberInput" disabled={true} type="text" maxLength={2} /></td>
           </tr>
 
         </tbody>
