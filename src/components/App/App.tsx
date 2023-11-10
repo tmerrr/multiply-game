@@ -23,7 +23,7 @@ const finalAnswers = calculateFinalAnswers(topRowAnswers, bottomRowAnswers);
 
 type RowName = 'top' | 'bottom' | 'final';
 
-const answers: Record<RowName, number[]> = {
+const answersMap: Record<RowName, number[]> = {
   top: topRowAnswers,
   bottom: bottomRowAnswers,
   final: finalAnswers,
@@ -44,7 +44,7 @@ function App() {
 
   const incrementAnswer = () => {
     const nextIndex = answersIndex + 1;
-    if (nextIndex >= answers[answeringRow].length) {
+    if (nextIndex >= answersMap[answeringRow].length) {
       incrementAnsweringRow();
       setAnswersIndex(0);
     } else {
@@ -56,6 +56,11 @@ function App() {
     console.log('<<<<<===== TO CARRY =====>>>>>', carriedOver);
     incrementAnswer();
   };
+
+  const isTopRow = answeringRow === 'top';
+  const isBottomRow = answeringRow === 'bottom';
+  const isFinalRow = answeringRow === 'final';
+  const isAnswerIndex = (i: number) => answersIndex === i;
 
   return (
     <div className="container">
@@ -101,21 +106,21 @@ function App() {
             <td></td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'top' && answersIndex === 2)}
+                disabled={!(isTopRow && isAnswerIndex(2))}
                 correctAnswer={topRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'top' && answersIndex === 1)}
+                disabled={!(isTopRow && isAnswerIndex(1))}
                 correctAnswer={topRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'top' && answersIndex === 0)}
+                disabled={!(isTopRow && isAnswerIndex(0))}
                 correctAnswer={topRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
@@ -136,21 +141,21 @@ function App() {
             <td>+</td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'bottom' && answersIndex === 2)}
+                disabled={!(isBottomRow && isAnswerIndex(2))}
                 correctAnswer={bottomRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'bottom' && answersIndex === 1)}
+                disabled={!(isBottomRow && isAnswerIndex(1))}
                 correctAnswer={bottomRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'bottom' && answersIndex === 0)}
+                disabled={!(isBottomRow && isAnswerIndex(0))}
                 correctAnswer={bottomRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
@@ -175,28 +180,28 @@ function App() {
             <td>=</td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'final' && answersIndex === 3)}
+                disabled={!(isFinalRow && isAnswerIndex(3))}
                 correctAnswer={finalAnswers[3]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'final' && answersIndex === 2)}
+                disabled={!(isFinalRow && isAnswerIndex(2))}
                 correctAnswer={finalAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'final' && answersIndex === 1)}
+                disabled={!(isFinalRow && isAnswerIndex(1))}
                 correctAnswer={finalAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
             <td>
               <NumberInput
-                disabled={!(answeringRow === 'final' && answersIndex === 0)}
+                disabled={!(isFinalRow && isAnswerIndex(0))}
                 correctAnswer={finalAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
