@@ -42,5 +42,30 @@ export const genNumberMap = (x: number): NumberMap => {
   };
 };
 
-export const getCarriedOver = (x: number) => Math.floor(x / 10);
-export const getSingleDigit = (x: number) => x % 10;
+export const getTensDigit = (x: number | string) => Math.floor(Number(x) / 10);
+export const getSingleDigit = (x: number | string) => Number(x) % 10;
+
+export const calculateRowAnswers = (bottomRowDigit: number, topRowValue: number): number[] => {
+  const firstAnswer = bottomRowDigit * getSingleDigit(topRowValue);
+  const secondAnswer = (bottomRowDigit * getTensDigit(topRowValue)) + getTensDigit(firstAnswer);
+  const thirdAnswer = getTensDigit(secondAnswer);
+  return [
+    firstAnswer,
+    secondAnswer,
+    thirdAnswer,
+  ];
+};
+
+export const calculateFinalAnswers = (topRowAnswers: number[], bottomRowAnswers: number[]): number[] => {
+  const singles = getSingleDigit(topRowAnswers[0]);
+  const tens = getSingleDigit(topRowAnswers[1]) + getSingleDigit(bottomRowAnswers[0]) + getTensDigit(singles);
+  const hundreds = getSingleDigit(topRowAnswers[2]) + getSingleDigit(bottomRowAnswers[1]) + getTensDigit(tens);
+  const thousands = bottomRowAnswers[2] + getTensDigit(hundreds);
+
+  return [
+    singles,
+    tens,
+    hundreds,
+    thousands,
+  ];
+};

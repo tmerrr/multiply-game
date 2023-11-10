@@ -35,7 +35,7 @@
   /* height: 20px; */
 }
 
-.carriedOverUsed {
+.carriedRow td.used {
   text-decoration: line-through;
 }
 
