@@ -23,31 +23,16 @@
 .row th,
 .row tf {
   width: 20%;
-  /* height: 50px; */
   height: 1.75em;
-}
-
-.carriedOverRow td {
-  font-size: 0.5em;
-  /* border: 0.5px solid black; */
-  /* font-size: 15px; */
-  /* width: 20px; */
-  /* height: 20px; */
-}
-
-.carriedOverRow td.used {
-  text-decoration: line-through;
 }
 
 .divider {
   border-bottom: 3px solid #000;
-  /* border-bottom: 0.1em solid #000; */
 }
 
 .tableHead th:not(:first-child),
 .tableBody td:not(:first-child) {
   border-left: 1px dashed #000;
-  /* border-left: 0.03em dashed #000; */
 }
 
 .numberInput {

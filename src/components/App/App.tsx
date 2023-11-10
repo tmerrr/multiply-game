@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { useState } from 'react';
 import classes from './App.module.css';
+import CarriedOverCell from '../CarriedOverCell/CarriedOverCell';
 import NumberInput from '../NumberInput/NumberInput';
 
 import {
@@ -30,11 +31,6 @@ const answersMap: Record<StageName, number[]> = {
 const hasZeroStartValue = (index: number, stage: StageName): boolean => {
   const stageAnswers = answersMap[stage];
   return index === stageAnswers.length - 1 && stageAnswers[index] === 0;
-};
-
-const showIfGtZero = (x: number): boolean | number => {
-  if (x > 0) return x;
-  return false;
 };
 
 function App() {
@@ -149,20 +145,24 @@ function App() {
             </td>
           </tr>
 
-          <tr className={classes.carriedOverRow}>
+          <tr>
             <td></td>
             <td></td>
-            <td className={cn({
-              [classes.active]: isFirstStage && isAnswerAtIndex(2),
-              [classes.used]: isPassedStage('first'),
-            })}>
-              {(isPassedStage('first') || isAnswerPassedIndex(1)) && showIfGtZero(getTensDigit(topRowAnswers[1]))}
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(topRowAnswers[1])}
+                isHidden={!(isPassedStage('first') || isAnswerPassedIndex(1))}
+                isHighlighted={isFirstStage && isAnswerAtIndex(2)}
+                isUsed={isPassedStage('first')}
+              />
             </td>
-            <td className={cn({
-              [classes.active]: isFirstStage && isAnswerAtIndex(1),
-              [classes.used]: isPassedStage('first') || isAnswerPassedIndex(1),
-            })}>
-              {(isPassedStage('first') || isAnswerPassedIndex(0)) && showIfGtZero(getTensDigit(topRowAnswers[0]))}
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(topRowAnswers[0])}
+                isHidden={!(isPassedStage('first') || isAnswerPassedIndex(0))}
+                isHighlighted={isFirstStage && isAnswerAtIndex(1)}
+                isUsed={isPassedStage('first') || isAnswerPassedIndex(1)}
+              />
             </td>
             <td></td>
           </tr>
@@ -197,19 +197,23 @@ function App() {
             <td></td> {/* SINGLE DIGITS COLUMN NOT USED ON SECOND ROW */}
           </tr>
 
-          <tr className={classes.carriedOverRow}>
+          <tr>
             <td></td>
-            <td className={cn({
-              [classes.active]: isSecondStage && isAnswerAtIndex(2),
-              [classes.used]: isPassedStage('second'),
-            })}>
-              {(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1))) && showIfGtZero(getTensDigit(bottomRowAnswers[1]))}
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(bottomRowAnswers[1])}
+                isHidden={!(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1)))}
+                isHighlighted={isSecondStage && isAnswerAtIndex(2)}
+                isUsed={isPassedStage('second')}
+              />
             </td>
-            <td className={cn({
-              [classes.active]: isSecondStage && isAnswerAtIndex(1),
-              [classes.used]: isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1)),
-            })}>
-              {(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(0))) && showIfGtZero(getTensDigit(bottomRowAnswers[0]))}
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(bottomRowAnswers[0])}
+                isHidden={!(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(0)))}
+                isHighlighted={isSecondStage && isAnswerAtIndex(1)}
+                isUsed={isPassedStage('second') || isAnswerPassedIndex(1)}
+              />
             </td>
             <td></td> {/* never has a carried value */}
             <td></td> {/* never has a carried value */}
@@ -256,19 +260,23 @@ function App() {
             </td>
           </tr>
 
-          <tr className={classes.carriedOverRow}>
+          <tr>
             <td></td>
-            <td className={cn({
-              [classes.active]: isFinalStage && isAnswerAtIndex(3),
-              [classes.used]: isPassedStage('final'),
-            })}>
-              <>{(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(2)) && showIfGtZero(getTensDigit(finalAnswers[2]))}</>
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(finalAnswers[2])}
+                isHidden={!(isFinalStage && isAnswerPassedIndex(2))}
+                isHighlighted={isFinalStage && isAnswerAtIndex(3)}
+                isUsed={isComplete || (isFinalStage && isAnswerPassedIndex(3))}
+              />
             </td>
-            <td className={cn({
-              [classes.active]: isFinalStage && isAnswerAtIndex(2),
-              [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(2)),
-            })}>
-              {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(1)) && showIfGtZero(getTensDigit(finalAnswers[1]))}
+            <td>
+              <CarriedOverCell
+                value={getTensDigit(finalAnswers[1])}
+                isHidden={!(isFinalStage && isAnswerPassedIndex(1))}
+                isHighlighted={isFinalStage && isAnswerAtIndex(2)}
+                isUsed={isComplete || (isFinalStage && isAnswerPassedIndex(2))}
+              />
             </td>
             <td></td>
             <td></td>

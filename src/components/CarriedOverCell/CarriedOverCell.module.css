@@ -1,0 +1,11 @@
+.carriedOverCell {
+  font-size: 0.5em;
+}
+
+.active {
+  color: #30af30;
+}
+
+.used {
+  text-decoration: line-through;
+}
