@@ -149,10 +149,16 @@ function App() {
           <tr className={classes.carriedOverRow}>
             <td></td>
             <td></td>
-            <td className={cn({ [classes.used]: isPassedStage('first') })}>
+            <td className={cn({
+              [classes.active]: isFirstStage && isAnswerAtIndex(2),
+              [classes.used]: isPassedStage('first'),
+            })}>
               {(isPassedStage('first') || isAnswerPassedIndex(1)) && showIfGtZero(getTensDigit(topRowAnswers[1]))}
             </td>
-            <td className={cn({ [classes.used]: isPassedStage('first') || isAnswerPassedIndex(1) })}>
+            <td className={cn({
+              [classes.active]: isFirstStage && isAnswerAtIndex(1),
+              [classes.used]: isPassedStage('first') || isAnswerPassedIndex(1),
+            })}>
               {(isPassedStage('first') || isAnswerPassedIndex(0)) && showIfGtZero(getTensDigit(topRowAnswers[0]))}
             </td>
             <td></td>
@@ -187,10 +193,16 @@ function App() {
 
           <tr className={classes.carriedOverRow}>
             <td></td>
-            <td className={cn({ [classes.used]: isPassedStage('second') })}>
+            <td className={cn({
+              [classes.active]: isSecondStage && isAnswerAtIndex(2),
+              [classes.used]: isPassedStage('second'),
+            })}>
               {(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1))) && showIfGtZero(getTensDigit(bottomRowAnswers[1]))}
             </td>
-            <td className={cn({ [classes.used]: isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1)) })}>
+            <td className={cn({
+              [classes.active]: isSecondStage && isAnswerAtIndex(1),
+              [classes.used]: isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(1)),
+            })}>
               {(isPassedStage('second') || (isSecondStage && isAnswerPassedIndex(0))) && showIfGtZero(getTensDigit(bottomRowAnswers[0]))}
             </td>
             <td></td>
@@ -236,13 +248,22 @@ function App() {
 
           <tr className={classes.carriedOverRow}>
             <td></td>
-            <td className={cn({ [classes.used]: isPassedStage('final') })}>
+            <td className={cn({
+              [classes.active]: isFinalStage && isAnswerAtIndex(3),
+              [classes.used]: isPassedStage('final'),
+            })}>
               {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(2)) && showIfGtZero(getTensDigit(finalAnswers[2]))}
             </td>
-            <td className={cn({ [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(2)) })}>
+            <td className={cn({
+              [classes.active]: isFinalStage && isAnswerAtIndex(2),
+              [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(2)),
+            })}>
               {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(1)) && showIfGtZero(getTensDigit(finalAnswers[1]))}
             </td>
-            <td className={cn({ [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(1)) })}>
+            <td className={cn({
+              [classes.active]: isFinalStage && isAnswerAtIndex(1),
+              [classes.used]: isPassedStage('final') || (isFinalStage && isAnswerPassedIndex(1))
+            })}>
               {(isPassedStage('final') || isFinalStage && isAnswerPassedIndex(0)) && showIfGtZero(getTensDigit(finalAnswers[0]))}
             </td>
             <td></td>
