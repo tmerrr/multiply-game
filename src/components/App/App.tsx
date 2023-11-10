@@ -11,9 +11,6 @@ import {
   calculateFinalAnswers,
 } from '../../helpers/maths';
 
-// TEMPORARY!
-// const doNothing = () => {};
-
 const topNumber = generateNumber(10, 99);
 const bottomNumber = generateNumber(10, 99);
 
@@ -21,12 +18,13 @@ const topRowAnswers = calculateRowAnswers(getSingleDigit(bottomNumber), topNumbe
 const bottomRowAnswers = calculateRowAnswers(getTensDigit(bottomNumber), topNumber);
 const finalAnswers = calculateFinalAnswers(topRowAnswers, bottomRowAnswers);
 
-type RowName = 'top' | 'bottom' | 'final';
+type StageName = 'first' | 'second' | 'final' | 'complete';
 
-const answersMap: Record<RowName, number[]> = {
-  top: topRowAnswers,
-  bottom: bottomRowAnswers,
+const answersMap: Record<StageName, number[]> = {
+  first: topRowAnswers,
+  second: bottomRowAnswers,
   final: finalAnswers,
+  complete: [],
 };
 
 const topNumberText = String(topNumber);
@@ -34,18 +32,19 @@ const bottomNumberText = String(bottomNumber);
 
 
 function App() {
-  const [answeringRow, setAnsweringRow] = useState<RowName>('top');
+  const [currentStage, setCurrentStage] = useState<StageName>('first');
   const [answersIndex, setAnswersIndex] = useState(0);
 
-  const incrementAnsweringRow = () => {
-    if (answeringRow === 'top') setAnsweringRow('bottom');
-    else setAnsweringRow('final');
+  const incrementStage = () => {
+    if (currentStage === 'first') setCurrentStage('second');
+    else if (currentStage === 'second') setCurrentStage('final');
+    else setCurrentStage('complete');
   };
 
   const incrementAnswer = () => {
     const nextIndex = answersIndex + 1;
-    if (nextIndex >= answersMap[answeringRow].length) {
-      incrementAnsweringRow();
+    if (nextIndex >= answersMap[currentStage].length) {
+      incrementStage();
       setAnswersIndex(0);
     } else {
       setAnswersIndex(nextIndex);
@@ -57,9 +56,10 @@ function App() {
     incrementAnswer();
   };
 
-  const isTopRow = answeringRow === 'top';
-  const isBottomRow = answeringRow === 'bottom';
-  const isFinalRow = answeringRow === 'final';
+  const isFirstStage = currentStage === 'first';
+  const isSecondStage = currentStage === 'second';
+  const isFinalStage = currentStage === 'final';
+  const isComplete = currentStage === 'complete';
   const isAnswerIndex = (i: number) => answersIndex === i;
 
   return (
@@ -84,16 +84,16 @@ function App() {
             <td></td>
             <td></td>
             <td></td>
-            <td>{topNumberText[0]}</td>
-            <td className='activeDigit'>{topNumberText[1]}</td>
+            <td className={(isFirstStage || isSecondStage) && isAnswerIndex(1) ? 'active' : ''}>{topNumberText[0]}</td>
+            <td className={(isFirstStage || isSecondStage) && isAnswerIndex(0) ? 'active' : ''}>{topNumberText[1]}</td>
           </tr>
 
           <tr className='row'>
-            <td>&times;</td>
+            <td className={(isFirstStage || isSecondStage) ? 'active' : ''}>&times;</td>
             <td></td>
             <td></td>
-            <td>{bottomNumberText[0]}</td>
-            <td className='activeDigit'>{bottomNumberText[1]}</td>
+            <td className={isSecondStage && answersIndex < 2 ? 'active' : ''}>{bottomNumberText[0]}</td>
+            <td className={isFirstStage && answersIndex < 2 ? 'active' : ''}>{bottomNumberText[1]}</td>
           </tr>
 
           <tr>
@@ -104,23 +104,23 @@ function App() {
           <tr className='row'>
             <td></td>
             <td></td>
-            <td>
+            <td className={isFinalStage && isAnswerIndex(2) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isTopRow && isAnswerIndex(2))}
+                disabled={!(isFirstStage && isAnswerIndex(2))}
                 correctAnswer={topRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isFinalStage && isAnswerIndex(1) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isTopRow && isAnswerIndex(1))}
+                disabled={!(isFirstStage && isAnswerIndex(1))}
                 correctAnswer={topRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isFinalStage && isAnswerIndex(0) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isTopRow && isAnswerIndex(0))}
+                disabled={!(isFirstStage && isAnswerIndex(0))}
                 correctAnswer={topRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
@@ -138,24 +138,24 @@ function App() {
 
           {/* SECOND ROW */}
           <tr className='row'>
-            <td>+</td>
-            <td>
+            <td className={isFinalStage ? 'active' : ''}>+</td>
+            <td className={isFinalStage && isAnswerIndex(3) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isBottomRow && isAnswerIndex(2))}
+                disabled={!(isSecondStage && isAnswerIndex(2))}
                 correctAnswer={bottomRowAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isFinalStage && isAnswerIndex(2) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isBottomRow && isAnswerIndex(1))}
+                disabled={!(isSecondStage && isAnswerIndex(1))}
                 correctAnswer={bottomRowAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isFinalStage && isAnswerIndex(1) ? 'active' : ''}>
               <NumberInput
-                disabled={!(isBottomRow && isAnswerIndex(0))}
+                disabled={!(isSecondStage && isAnswerIndex(0))}
                 correctAnswer={bottomRowAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
@@ -177,31 +177,31 @@ function App() {
 
           {/* FINAL ROW / TOTAL */}
           <tr className='row'>
-            <td>=</td>
-            <td>
+            <td className={isComplete ? 'active' : ''}>=</td>
+            <td className={isComplete ? 'active' : ''}>
               <NumberInput
-                disabled={!(isFinalRow && isAnswerIndex(3))}
+                disabled={!(isFinalStage && isAnswerIndex(3))}
                 correctAnswer={finalAnswers[3]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isComplete ? 'active' : ''}>
               <NumberInput
-                disabled={!(isFinalRow && isAnswerIndex(2))}
+                disabled={!(isFinalStage && isAnswerIndex(2))}
                 correctAnswer={finalAnswers[2]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isComplete ? 'active' : ''}>
               <NumberInput
-                disabled={!(isFinalRow && isAnswerIndex(1))}
+                disabled={!(isFinalStage && isAnswerIndex(1))}
                 correctAnswer={finalAnswers[1]}
                 onComplete={handleCorrectAnswer}
               />
             </td>
-            <td>
+            <td className={isComplete ? 'active' : ''}>
               <NumberInput
-                disabled={!(isFinalRow && isAnswerIndex(0))}
+                disabled={!(isFinalStage && isAnswerIndex(0))}
                 correctAnswer={finalAnswers[0]}
                 onComplete={handleCorrectAnswer}
               />
