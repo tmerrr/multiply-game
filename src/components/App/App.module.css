@@ -6,6 +6,44 @@
   color: #444;
 }
 
+/* .rotateNumberButton {
+  font-size: 15px;
+  margin-left: 10px;
+  background-color: #0ad2d2;
+} */
+
+.rotateNumberButton {
+  margin-left: 10px;
+  width: 50px; /* Set the width and height to create a circular shape */
+  height: 50px;
+  border-radius: 50%; /* Makes the element a circle */
+  background-color: #0d8d8d; /* Background color of the button */
+  border: none; /* Remove the default button border */
+  cursor: pointer; /* Show a hand cursor on hover for better usability */
+}
+
+.rotateNumberButton:hover {
+  border: 1px solid black;
+}
+
+.rotateNumberButton:active {
+  border: none;
+}
+
+.rotateNumberButton:disabled {
+  background-color: lightgray;
+}
+
+.rotateNumberButton:disabled:hover {
+  border: none;
+}
+
+.rotateNumberButton img {
+  padding: 5px;
+  width: 40px;
+  height: auto;
+}
+
 .container {
   width: 20em;
   text-align: center;
@@ -13,6 +51,7 @@
 
 .mainTable {
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .active {
@@ -34,6 +73,10 @@
 .tableBody td:not(:first-child) {
   border-left: 1px dashed #000;
 }
+
+/* .rotatedText {
+  transform: rotate(90deg);
+} */
 
 .numberInput {
   width: 40px;
