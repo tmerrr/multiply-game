@@ -6,12 +6,6 @@
   color: #444;
 }
 
-/* .rotateNumberButton {
-  font-size: 15px;
-  margin-left: 10px;
-  background-color: #0ad2d2;
-} */
-
 .rotateNumberButton {
   margin-left: 10px;
   width: 50px; /* Set the width and height to create a circular shape */
@@ -44,6 +38,25 @@
   height: auto;
 }
 
+.playAgain {
+  font-size: 20px;
+  margin-left: 10px;
+  width: 125px; /* Set the width and height to create a circular shape */
+  height: 125px;
+  border-radius: 50%; /* Makes the element a circle */
+  background-color: #0d8d8d; /* Background color of the button */
+  border: none; /* Remove the default button border */
+  cursor: pointer; /* Show a hand cursor on hover for better usability */
+}
+
+.playAgain:hover {
+  border: 1px solid black;
+}
+
+.playAgain:active {
+  border: none;
+}
+
 .container {
   width: 20em;
   text-align: center;
@@ -51,7 +64,7 @@
 
 .mainTable {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .active {

@@ -45,10 +45,12 @@ function App() {
     setBottomNumber(generateNumber(10, 99));
   };
 
-  // const hardReset = () => {
-  //   setCurrentStage('first');
-  //   setAnswersIndex(0);
-  // };
+  const hardReset = () => {
+    setCurrentStage('first');
+    setAnswersIndex(0);
+    regenTopNumber();
+    regenBottomNumber();
+  };
 
   const incrementStage = () => {
     if (currentStage === 'first') setCurrentStage('second');
@@ -89,6 +91,12 @@ function App() {
         return false;
     }
   };
+
+  const playAgainButton = (
+    <button className={classes.playAgain} onClick={hardReset}>
+      Play Again
+    </button>
+  )
 
   return (
     <div>
@@ -147,6 +155,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFirstStage && isAnswerAtIndex(2))}
                   correctAnswer={topRowAnswers[2]}
+                  isComplete={topRowAnswers[2] > 0 && isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(2)}
                 />
@@ -155,6 +164,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFirstStage && isAnswerAtIndex(1))}
                   correctAnswer={topRowAnswers[1]}
+                  isComplete={isAnswerPassedIndex(1) || isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(1)}
                 />
@@ -163,6 +173,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFirstStage && isAnswerAtIndex(0))}
                   correctAnswer={topRowAnswers[0]}
+                  isComplete={isAnswerPassedIndex(0) || isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(0)}
                 />
@@ -198,6 +209,7 @@ function App() {
                 <NumberInput
                   disabled={!(isSecondStage && isAnswerAtIndex(2))}
                   correctAnswer={bottomRowAnswers[2]}
+                  isComplete={bottomRowAnswers[2] > 0 && isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(3)}
                 />
@@ -206,6 +218,7 @@ function App() {
                 <NumberInput
                   disabled={!(isSecondStage && isAnswerAtIndex(1))}
                   correctAnswer={bottomRowAnswers[1]}
+                  isComplete={(isSecondStage && isAnswerPassedIndex(1)) || isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(2)}
                 />
@@ -214,6 +227,7 @@ function App() {
                 <NumberInput
                   disabled={!(isSecondStage && isAnswerAtIndex(0))}
                   correctAnswer={bottomRowAnswers[0]}
+                  isComplete={(isSecondStage && isAnswerPassedIndex(0)) || isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(1)}
                 />
@@ -254,6 +268,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFinalStage && isAnswerAtIndex(3))}
                   correctAnswer={finalAnswers[3]}
+                  isComplete={finalAnswers[3] > 0 && isComplete}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
                 />
@@ -262,6 +277,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFinalStage && isAnswerAtIndex(2))}
                   correctAnswer={finalAnswers[2]}
+                  isComplete={(isFinalStage && isAnswerPassedIndex(2) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
                 />
@@ -270,6 +286,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFinalStage && isAnswerAtIndex(1))}
                   correctAnswer={finalAnswers[1]}
+                  isComplete={(isFinalStage && isAnswerPassedIndex(1) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
                 />
@@ -278,6 +295,7 @@ function App() {
                 <NumberInput
                   disabled={!(isFinalStage && isAnswerAtIndex(0))}
                   correctAnswer={finalAnswers[0]}
+                  isComplete={(isFinalStage && isAnswerPassedIndex(0) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
                 />
@@ -321,6 +339,8 @@ function App() {
           </tfoot>
 
         </table>
+
+        {isComplete && playAgainButton}
 
       </div>
     </div>

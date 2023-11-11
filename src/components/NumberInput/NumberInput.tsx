@@ -6,6 +6,7 @@ import classes from './NumberInput.module.css';
 type NumberInputProps = {
   correctAnswer: number;
   disabled: boolean;
+  isComplete: boolean;
   onComplete: () => void;
   isHighlighted?: boolean;
 }
@@ -16,12 +17,13 @@ const isValidInteger = (value: string) => twoDigitIntegerRegex.test(value);
 
 const NumberInput = ({
   correctAnswer,
-  onComplete,
   disabled,
+  isComplete,
+  onComplete,
   isHighlighted = false,
 }: NumberInputProps) => {
   const [value, setValue] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
+  // const [isComplete, setIsComplete] = useState(false);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = (event) => {
     const {
@@ -35,8 +37,8 @@ const NumberInput = ({
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (Number(value) === correctAnswer) {
-      setIsComplete(true);
       onComplete();
+      setValue('');
     }
   };
 
@@ -55,7 +57,7 @@ const NumberInput = ({
 
   const renderedNumber = (
     <div className={cn({ [classes.active]: isHighlighted })}>
-      {getSingleDigit(value)}
+      {getSingleDigit(correctAnswer)}
     </div>
   );
 
