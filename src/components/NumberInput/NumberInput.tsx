@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { ChangeEventHandler, FormEventHandler, useState, RefObject } from 'react';
 import { getSingleDigit } from '../../helpers/maths';
 import classes from './NumberInput.module.css';
 
@@ -8,6 +8,7 @@ type NumberInputProps = {
   disabled: boolean;
   isComplete: boolean;
   onComplete: () => void;
+  inputRef: RefObject<HTMLInputElement>;
   isHighlighted?: boolean;
 }
 
@@ -20,10 +21,10 @@ const NumberInput = ({
   disabled,
   isComplete,
   onComplete,
+  inputRef,
   isHighlighted = false,
 }: NumberInputProps) => {
   const [value, setValue] = useState('');
-  // const [isComplete, setIsComplete] = useState(false);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = (event) => {
     const {
@@ -51,6 +52,7 @@ const NumberInput = ({
         value={value}
         onChange={handleInput}
         disabled={disabled}
+        ref={inputRef}
       />
     </form>
   );

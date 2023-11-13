@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useState } from 'react';
+import { useState, useRef, RefObject, useEffect } from 'react';
 import classes from './App.module.css';
 import CarriedOverCell from '../CarriedOverCell/CarriedOverCell';
 import NumberInput from '../NumberInput/NumberInput';
@@ -32,6 +32,23 @@ function App() {
     final: finalAnswers,
     complete: [],
   };
+
+  const topRowRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+  const bottomRowRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+  const finalRowRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
 
   const hasZeroStartValue = (index: number, stage: StageName): boolean => {
     const stageAnswers = answersMap[stage];
@@ -71,6 +88,20 @@ function App() {
   const handleCorrectAnswer = () => {
     incrementAnswer();
   };
+
+  // handle AutoFocus
+  useEffect(() => {
+    const refsMap: Record<StageName, RefObject<HTMLInputElement>[]> = {
+      first: topRowRefs,
+      second: bottomRowRefs,
+      final: finalRowRefs,
+      complete: [],
+    };
+    if (currentStage !== 'complete') {
+      const inputRef = refsMap[currentStage][answersIndex];
+      inputRef.current?.focus()
+    }
+  }, [currentStage, answersIndex])
 
   const isAnswerAtIndex = (i: number) => answersIndex === i;
   const isAnswerPassedIndex = (i: number) => answersIndex > i;
@@ -143,7 +174,6 @@ function App() {
               <td className={classes.divider} colSpan={5}></td>
             </tr>
 
-            {/* TOP ROW */}
             <tr className={classes.row}>
               <td></td>
               <td></td>
@@ -154,6 +184,7 @@ function App() {
                   isComplete={topRowAnswers[2] > 0 && isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(2)}
+                  inputRef={topRowRefs[2]}
                 />
               </td>
               <td>
@@ -163,6 +194,7 @@ function App() {
                   isComplete={isAnswerPassedIndex(1) || isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(1)}
+                  inputRef={topRowRefs[1]}
                 />
               </td>
               <td>
@@ -172,6 +204,7 @@ function App() {
                   isComplete={isAnswerPassedIndex(0) || isPassedStage('first')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(0)}
+                  inputRef={topRowRefs[0]}
                 />
               </td>
             </tr>
@@ -198,7 +231,6 @@ function App() {
               <td></td>
             </tr>
 
-            {/* SECOND ROW */}
             <tr className={classes.row}>
               <td className={cn({ [classes.active]: isFinalStage })}>+</td>
               <td>
@@ -208,6 +240,7 @@ function App() {
                   isComplete={bottomRowAnswers[2] > 0 && isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(3)}
+                  inputRef={bottomRowRefs[2]}
                 />
               </td>
               <td>
@@ -217,6 +250,7 @@ function App() {
                   isComplete={(isSecondStage && isAnswerPassedIndex(1)) || isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(2)}
+                  inputRef={bottomRowRefs[1]}
                 />
               </td>
               <td>
@@ -226,9 +260,10 @@ function App() {
                   isComplete={(isSecondStage && isAnswerPassedIndex(0)) || isPassedStage('second')}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isFinalStage && isAnswerAtIndex(1)}
+                  inputRef={bottomRowRefs[0]}
                 />
               </td>
-              <td></td> {/* SINGLE DIGITS COLUMN NOT USED ON SECOND ROW */}
+              <td></td>
             </tr>
 
             <tr>
@@ -249,15 +284,14 @@ function App() {
                   isUsed={isPassedStage('second') || isAnswerPassedIndex(1)}
                 />
               </td>
-              <td></td> {/* never has a carried value */}
-              <td></td> {/* never has a carried value */}
+              <td></td>
+              <td></td>
             </tr>
 
             <tr>
               <td className={classes.divider} colSpan={5}></td>
             </tr>
 
-            {/* FINAL ROW / TOTAL */}
             <tr className={classes.row}>
               <td className={cn({ [classes.active]: isComplete })}>=</td>
               <td>
@@ -267,6 +301,7 @@ function App() {
                   isComplete={finalAnswers[3] > 0 && isComplete}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
+                  inputRef={finalRowRefs[3]}
                 />
               </td>
               <td>
@@ -276,6 +311,7 @@ function App() {
                   isComplete={(isFinalStage && isAnswerPassedIndex(2) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
+                  inputRef={finalRowRefs[2]}
                 />
               </td>
               <td>
@@ -285,6 +321,7 @@ function App() {
                   isComplete={(isFinalStage && isAnswerPassedIndex(1) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
+                  inputRef={finalRowRefs[1]}
                 />
               </td>
               <td>
@@ -294,6 +331,7 @@ function App() {
                   isComplete={(isFinalStage && isAnswerPassedIndex(0) || isComplete)}
                   onComplete={handleCorrectAnswer}
                   isHighlighted={isComplete}
+                  inputRef={finalRowRefs[0]}
                 />
               </td>
             </tr>
@@ -303,7 +341,7 @@ function App() {
               <td>
                 <CarriedOverCell
                   value={getTensDigit(finalAnswers[2])}
-                  isHidden={!(isFinalStage && isAnswerPassedIndex(2))}
+                  isHidden={!(isComplete || (isFinalStage && isAnswerPassedIndex(2)))}
                   isHighlighted={isFinalStage && isAnswerAtIndex(3)}
                   isUsed={isComplete || (isFinalStage && isAnswerPassedIndex(3))}
                 />
@@ -311,7 +349,7 @@ function App() {
               <td>
                 <CarriedOverCell
                   value={getTensDigit(finalAnswers[1])}
-                  isHidden={!(isFinalStage && isAnswerPassedIndex(1))}
+                  isHidden={!(isComplete || (isFinalStage && isAnswerPassedIndex(1)))}
                   isHighlighted={isFinalStage && isAnswerAtIndex(2)}
                   isUsed={isComplete || (isFinalStage && isAnswerPassedIndex(2))}
                 />
