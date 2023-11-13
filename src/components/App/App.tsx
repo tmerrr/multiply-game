@@ -4,7 +4,7 @@ import classes from './App.module.css';
 import CarriedOverCell from '../CarriedOverCell/CarriedOverCell';
 import NumberInput from '../NumberInput/NumberInput';
 
-import arrows from './circle-arrs-2.png';
+import RotateButton from '../RotateButton/RotateButton';
 
 import {
   generateNumber,
@@ -123,10 +123,11 @@ function App() {
               <td></td>
               <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerAtIndex(1) })}>{getTensDigit(topNumber)}</td>
               <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerAtIndex(0) })}>{getSingleDigit(topNumber)}</td>
-              <td>
-                <button className={classes.rotateNumberButton} disabled={isPassedStage('first') || isAnswerPassedIndex(0)} onClick={regenTopNumber}>
-                  <img src={arrows} alt="Cycle arrows" />
-                </button>
+              <td className={classes.buttonCell}>
+                <RotateButton
+                  onClick={regenTopNumber}
+                  disabled={isPassedStage('first') || isAnswerPassedIndex(0)}
+                />
               </td>
             </tr>
 
@@ -136,10 +137,11 @@ function App() {
               <td></td>
               <td className={cn({ [classes.active]: isSecondStage && answersIndex < 2 })}>{getTensDigit(bottomNumber)}</td>
               <td className={cn({ [classes.active]: isFirstStage && answersIndex < 2 })}>{getSingleDigit(bottomNumber)}</td>
-              <td>
-                <button className={classes.rotateNumberButton} disabled={isPassedStage('first') || isAnswerPassedIndex(0)} onClick={regenBottomNumber}>
-                  <img src={arrows} alt="Cycle arrows" />
-                </button>
+              <td className={classes.buttonCell}>
+                <RotateButton
+                  onClick={regenBottomNumber}
+                  disabled={isPassedStage('first') || isAnswerPassedIndex(0)}
+                />
               </td>
             </tr>
 
