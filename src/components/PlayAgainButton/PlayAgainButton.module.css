@@ -1,0 +1,18 @@
+.mainButton {
+  font-size: 20px;
+  margin-left: 10px;
+  width: 125px; /* Set the width and height to create a circular shape */
+  height: 125px;
+  border-radius: 50%; /* Makes the element a circle */
+  background-color: #0d8d8d; /* Background color of the button */
+  border: none; /* Remove the default button border */
+  cursor: pointer; /* Show a hand cursor on hover for better usability */
+}
+
+.mainButton:hover {
+  border: 1px solid black;
+}
+
+.mainButton:active {
+  border: none;
+}

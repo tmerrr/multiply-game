@@ -3,8 +3,8 @@ import { useState } from 'react';
 import classes from './App.module.css';
 import CarriedOverCell from '../CarriedOverCell/CarriedOverCell';
 import NumberInput from '../NumberInput/NumberInput';
-
 import RotateButton from '../RotateButton/RotateButton';
+import PlayAgainButton from '../PlayAgainButton/PlayAgainButton';
 
 import {
   generateNumber,
@@ -39,10 +39,10 @@ function App() {
   };
 
   const regenTopNumber = () => {
-    setTopNumber(generateNumber(10, 99));
+    setTopNumber(generateNumber(11, 99));
   };
   const regenBottomNumber = () => {
-    setBottomNumber(generateNumber(10, 99));
+    setBottomNumber(generateNumber(11, 99));
   };
 
   const hardReset = () => {
@@ -91,12 +91,6 @@ function App() {
         return false;
     }
   };
-
-  const playAgainButton = (
-    <button className={classes.playAgain} onClick={hardReset}>
-      Play Again
-    </button>
-  )
 
   return (
     <div>
@@ -342,7 +336,7 @@ function App() {
 
         </table>
 
-        {isComplete && playAgainButton}
+        {isComplete && <PlayAgainButton onClick={hardReset} />}
 
       </div>
     </div>
