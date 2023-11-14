@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { ChangeEventHandler, FormEventHandler, useState, RefObject } from 'react';
 import { getSingleDigit } from '../../helpers/maths';
 import classes from './NumberInput.module.css';
+import 'bulma/css/bulma.css';
 
 type NumberInputProps = {
   correctAnswer: number;
@@ -46,7 +47,7 @@ const NumberInput = ({
   const inputForm = (
     <form action="submit" onSubmit={handleSubmit}>
       <input
-        className={classes.numberInput}
+        className={cn(classes.numberInput)}
         type="text"
         maxLength={2}
         value={value}
@@ -58,7 +59,7 @@ const NumberInput = ({
   );
 
   const renderedNumber = (
-    <div className={cn({ [classes.active]: isHighlighted })}>
+    <div className={cn({ 'has-text-success': isHighlighted })}>
       {getSingleDigit(correctAnswer)}
     </div>
   );

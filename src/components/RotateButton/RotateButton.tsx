@@ -1,5 +1,7 @@
-import classes from './RotateButton.module.css';
-import arrows from './circle-arrows.png';
+
+import Icon from '@mdi/react';
+import { mdiAutorenew } from '@mdi/js';
+import 'bulma/css/bulma.css';
 
 type RotateButtonProps = {
   onClick: () => void;
@@ -15,8 +17,8 @@ const RotateButton = ({
   };
 
   return (
-    <button className={classes.mainButton} disabled={disabled} onClick={handleClick}>
-      <img src={arrows} alt="Cycle arrows" />
+    <button className='button is-primary is-square is-rounded' disabled={disabled} onClick={handleClick}>
+      <Icon path={mdiAutorenew} size={1} color='white' />
     </button>
   );
 };

@@ -2,22 +2,21 @@
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   color: #444;
 }
 
+/* .column-headers {} */
+
 .container {
-  width: 20em;
+  width: 360px;
   text-align: center;
 }
 
 .mainTable {
   width: 100%;
+  /* margin-top: 20px; */
   margin-bottom: 20px;
-}
-
-.active {
-  color: #30af30;
 }
 
 .row td,
@@ -40,12 +39,10 @@
   border: 0 !important;
 }
 
-/* .rotatedText {
-  transform: rotate(90deg);
-} */
-
-.numberInput {
-  width: 40px;
-  height: 40px;
-  text-align: center;
+.mainTable thead tr th p,
+.mainTable tfoot tr th p {
+  font-size: 15px;
+  transform: rotate(-45deg);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

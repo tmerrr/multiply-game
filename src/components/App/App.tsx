@@ -132,10 +132,10 @@ function App() {
 
             <tr className={classes.row}>
               <th></th>
-              <th>1,000's</th>
-              <th>100's</th>
-              <th>10's</th>
-              <th>1's</th>
+              <th><p>1,000's</p></th>
+              <th><p>100's</p></th>
+              <th><p>10's</p></th>
+              <th><p>1's</p></th>
             </tr>
 
           </thead>
@@ -146,8 +146,8 @@ function App() {
               <td></td>
               <td></td>
               <td></td>
-              <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerAtIndex(1) })}>{getTensDigit(topNumber)}</td>
-              <td className={cn({ [classes.active]: (isFirstStage || isSecondStage) && isAnswerAtIndex(0) })}>{getSingleDigit(topNumber)}</td>
+              <td className={cn({ ['has-text-success']: (isFirstStage || isSecondStage) && isAnswerAtIndex(1) })}>{getTensDigit(topNumber)}</td>
+              <td className={cn({ ['has-text-success']: (isFirstStage || isSecondStage) && isAnswerAtIndex(0) })}>{getSingleDigit(topNumber)}</td>
               <td className={classes.buttonCell}>
                 <RotateButton
                   onClick={regenTopNumber}
@@ -157,11 +157,11 @@ function App() {
             </tr>
 
             <tr className={classes.row}>
-              <td className={cn({ [classes.active]: isFirstStage || isSecondStage })}>&times;</td>
+              <td className={cn({ ['has-text-success']: isFirstStage || isSecondStage })}>&times;</td>
               <td></td>
               <td></td>
-              <td className={cn({ [classes.active]: isSecondStage && answersIndex < 2 })}>{getTensDigit(bottomNumber)}</td>
-              <td className={cn({ [classes.active]: isFirstStage && answersIndex < 2 })}>{getSingleDigit(bottomNumber)}</td>
+              <td className={cn({ ['has-text-success']: isSecondStage && answersIndex < 2 })}>{getTensDigit(bottomNumber)}</td>
+              <td className={cn({ ['has-text-success']: isFirstStage && answersIndex < 2 })}>{getSingleDigit(bottomNumber)}</td>
               <td className={classes.buttonCell}>
                 <RotateButton
                   onClick={regenBottomNumber}
@@ -232,7 +232,7 @@ function App() {
             </tr>
 
             <tr className={classes.row}>
-              <td className={cn({ [classes.active]: isFinalStage })}>+</td>
+              <td className={cn({ ['has-text-success']: isFinalStage })}>+</td>
               <td>
                 <NumberInput
                   disabled={!(isSecondStage && isAnswerAtIndex(2))}
@@ -293,7 +293,7 @@ function App() {
             </tr>
 
             <tr className={classes.row}>
-              <td className={cn({ [classes.active]: isComplete })}>=</td>
+              <td className={cn({ ['has-text-success']: isComplete })}>=</td>
               <td>
                 <NumberInput
                   disabled={!(isFinalStage && isAnswerAtIndex(3))}
@@ -364,17 +364,18 @@ function App() {
 
             <tr className={classes.row}>
               <th></th>
-              <th>1,000's</th>
-              <th>100's</th>
-              <th>10's</th>
-              <th>1's</th>
+              <th><p>1,000's</p></th>
+              <th><p>100's</p></th>
+              <th><p>10's</p></th>
+              <th><p>1's</p></th>
             </tr>
 
           </tfoot>
 
         </table>
 
-        {isComplete && <PlayAgainButton onClick={hardReset} />}
+        {/* {isComplete && <PlayAgainButton onClick={hardReset} />} */}
+        <PlayAgainButton onClick={hardReset} />
 
       </div>
     </div>

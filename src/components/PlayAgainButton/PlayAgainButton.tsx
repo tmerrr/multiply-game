@@ -1,4 +1,4 @@
-import classes from './PlayAgainButton.module.css';
+import 'bulma/css/bulma.css';
 
 type PlayAgainButtonProps = {
   onClick: () => void;
@@ -10,7 +10,7 @@ const PlayAgainButton = ({ onClick }: PlayAgainButtonProps) => {
   };
 
   return (
-    <button className={classes.mainButton} onClick={handleClick}>
+    <button className='button is-success' onClick={handleClick}>
       Play Again
     </button>
   );
