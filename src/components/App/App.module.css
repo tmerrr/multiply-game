@@ -1,17 +1,26 @@
-* {
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 25px;
-  color: #444;
 }
 
-/* .column-headers {} */
+.chalkboard {
+  min-height: 100vh; /* Ensure the chalkboard takes at least the height of the viewport */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Chalkduster', cursive;
+  background-color: #111111;
+  font-size: 25px;
+  color: #F8F8F8;
+}
 
-.container {
+.gameContainer {
   width: 360px;
+  margin-top: 20px; /* Adjust this value as needed */
   text-align: center;
 }
+
 
 .mainTable {
   width: 100%;
@@ -22,17 +31,18 @@
 .row td,
 .row th,
 .row tf {
+  color: #F8F8F8;
   width: 20%;
   height: 1.75em;
 }
 
 .divider {
-  border-bottom: 3px solid #000;
+  border-bottom: 3px solid #F8F8F8;
 }
 
 .tableHead th:not(:first-child),
 .tableBody td:not(:first-child) {
-  border-left: 1px dashed #000;
+  border-left: 1px dashed #F8F8F8;
 }
 
 .buttonCell {

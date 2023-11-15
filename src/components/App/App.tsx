@@ -17,8 +17,8 @@ import {
 type StageName = 'first' | 'second' | 'final' | 'complete';
 
 function App() {
-  const [topNumber, setTopNumber] = useState(generateNumber(10, 99));
-  const [bottomNumber, setBottomNumber] = useState(generateNumber(10, 99));
+  const [topNumber, setTopNumber] = useState(generateNumber(11, 99));
+  const [bottomNumber, setBottomNumber] = useState(generateNumber(11, 99));
   const [currentStage, setCurrentStage] = useState<StageName>('first');
   const [answersIndex, setAnswersIndex] = useState(0);
 
@@ -124,8 +124,8 @@ function App() {
   };
 
   return (
-    <div>
-      <div className={classes.container}>
+    <div className={classes.chalkboard}>
+      <div className={classes.gameContainer}>
         <table className={classes.mainTable}>
 
           <thead className={classes.tableHead}>
@@ -374,8 +374,7 @@ function App() {
 
         </table>
 
-        {/* {isComplete && <PlayAgainButton onClick={hardReset} />} */}
-        <PlayAgainButton onClick={hardReset} />
+        {isComplete && <PlayAgainButton onClick={hardReset} />}
 
       </div>
     </div>
